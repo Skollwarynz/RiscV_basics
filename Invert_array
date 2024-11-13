@@ -1,0 +1,59 @@
+.global _start
+.data 
+	size: .word 8
+	array: .dword 8,7,6,5,4,3,2,1
+.text
+_start:
+
+la t0,size
+lw t0,0(t0) #size
+srai t1,t0,1 #size/2
+li t2,0 #i
+la t3,array
+la t4,array #shift
+LOOP:
+    bge t2,t1,ENDLOOP
+    ld t5,0(t4)
+    
+    slli t2,t2,3
+    sub t4,t4,t2
+    srai t2,t2,3
+    
+    addi t6,t2,0
+    addi t6,t2,1
+    sub t6,t0,t6
+    slli t6,t6,3
+    
+    add t4,t4,t6
+    
+    ld t3,0(t4)
+    
+    sub t4,t4,t6
+    
+    slli t2,t2,3
+    add t4,t4,t2
+    srai t2,t2,3 
+    
+    sd t3,0(t4)
+    
+    slli t2,t2,3
+    sub t4,t4,t2
+    srai t2,t2,3 
+    
+    add t4,t4,t6
+    
+    sd t5,0(t4)
+    
+    sub t4,t4,t6
+    slli t2,t2,3
+    add t4,t4,t2
+    srai t2,t2,3
+    
+    addi t4,t4,8
+    addi t2,t2,1
+    beq x0,x0,LOOP
+ENDLOOP:
+
+
+addi a7, zero, 10    # code to exit
+  ecall         # make the system call

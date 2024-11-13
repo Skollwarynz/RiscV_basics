@@ -1,0 +1,42 @@
+.global _start
+.data 
+	size: .word 8
+	array: .dword 8,7,6,5,4,3,2,1
+.text
+_start:
+
+li t0,1 #change
+la t1,size
+lw t1,0(t1)
+li t2,1
+sub t1,t1,t2 #size-1
+la t2,array
+WHILE:
+    ble t0,x0,ENDWHILE
+    li t0,0
+    li t3,0 #i
+    la t2,array
+    LOOP:
+        bge t3,t1,ENDLOOP
+        ld t4,0(t2) #array i
+        addi t2,t2,8
+        ld t5,0(t2)# i+1
+        li t6,8
+        sub t2,t2,t6
+            ble t4,t5,ENDIF
+            sd t5,0(t2)
+            addi t2,t2,8
+            sd t4,0(t2)# i+1
+            li t6,8
+            sub t2,t2,t6
+            li t0,1
+            ENDIF:
+        addi t2,t2,8    
+        addi t3,t3,1
+        j LOOP
+    ENDLOOP:
+    j WHILE
+ENDWHILE:
+
+addi a7, zero, 10    # code to exit
+  ecall         # make the system call
