@@ -15,8 +15,9 @@ _start:
     ecall
     
 strcpy:
+#preparation of the stack 
     addi sp,sp,-40
-    sd ra,0(sp)
+    sd ra,0(sp)  #saving of the return address
     sd s1,8(sp)
     sd s2,16(sp)
     sd s3,24(sp)
